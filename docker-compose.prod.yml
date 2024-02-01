@@ -1,0 +1,31 @@
+version: '3'
+services:
+  node-backend:
+    build:
+      context: .
+      dockerfile: node.prod.dockerfile
+    volumes:
+      - ./dist:/usr/src/dist
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  nginx-proxy:
+    build:
+      context: .
+      dockerfile: nginx.prod.dockerfile
+    volumes:
+      - ./client/dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    depends_on:
+      - node-backend
+
+networks:
+  app-network:
+    driver: bridge
+

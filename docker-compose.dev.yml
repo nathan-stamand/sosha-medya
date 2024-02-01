@@ -1,0 +1,30 @@
+version: '3'
+services:
+  node-backend-dev:
+    build:
+      context: .
+      dockerfile: node.dev.dockerfile
+    volumes:
+      - ./src:/usr/src
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  react-frontend-dev:
+    build:
+      context: ./client
+      dockerfile: react.dev.dockerfile
+    volumes:
+      - ./client:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - node-backend-dev
+
+networks:
+  app-network:
+    driver: bridge
+
