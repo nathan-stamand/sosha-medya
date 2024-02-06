@@ -1,6 +1,7 @@
 const express = require("express");
 const config = require("../config");
 const testConnection = require("./db");
+import "reflect-metadata";
 import { Request, Response } from "express";
 
 const app = express();

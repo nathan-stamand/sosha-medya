@@ -10,6 +10,8 @@
     "paths": {},
     "resolveJsonModule": true
   },
+  "emitDecoratorMetadata": true,
+  "experimentalDecorator": true,
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
