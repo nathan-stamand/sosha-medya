@@ -2,16 +2,11 @@ FROM node:lts-alpine
 
 WORKDIR /usr
 
-COPY package.json .
-COPY config.js .
-COPY .env.development.json .
-COPY tsconfig.json .
+COPY . .
 
 RUN npm install
 
-WORKDIR /usr/src
-
-COPY ./src .
+RUN node loadDatabaseEnv.js
 
 EXPOSE 8000
 
