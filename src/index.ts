@@ -1,24 +1,41 @@
-const express = require("express");
-const config = require("../config");
+import express, { Request, Response } from "express";
+import config from "./config";
 import "reflect-metadata";
-const { AppDataSource } = require("./data-source");
-import { Request, Response } from "express";
+import cors from "cors"
+import { AppDataSource } from "./data-source";
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("TypeORM data source initialized, connected to Database");
+  })
+  .catch((err: Error) => {
+    console.log("TypeORM error: ", err);
+  });
 
 const app = express();
 const port = config.get("port");
 
-// Allow any ole ping when I'm develop-ping
+app.use(express.json());
+
 if (config.get("env") === "development") {
-  const cors = require("cors");
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
 }
 
-app.get("*", (req: Request, res: Response) => {
-  res.json({ body: "This is a response" });
+app.post("/api/login", (req: Request, res: Response) => {
+  res.json({ hello: "bruh" });
+});
+
+app.post("/api/register", (req: Request, res: Response) => {
+  res.json(req.body);
 });
 
 app.listen(port, () => {
   console.log(`Server running on localhost:${port}`);
 });
 
-export default {};
+export default {}

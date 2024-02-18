@@ -1,5 +1,5 @@
-const convict = require("convict");
-const convictFormatWithValidator = require("convict-format-with-validator");
+import convict from "convict"
+import convictFormatWithValidator from "convict-format-with-validator"
 
 convict.addFormats(convictFormatWithValidator);
 
@@ -46,8 +46,8 @@ const config = convict({
 });
 
 const env = config.get("env");
-config.loadFile(`./.env.${env}.json`);
+config.loadFile(`.env.${env}.json`);
 
 config.validate({ allowed: "strict" });
 
-module.exports = config;
+export default config
